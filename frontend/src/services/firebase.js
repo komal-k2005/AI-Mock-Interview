@@ -11,15 +11,15 @@ import {
   sendPasswordResetEmail
 } from 'firebase/auth';
 
-// Firebase configuration - requires environment variables
+// Firebase configuration
 const firebaseConfig = {
-  apiKey: process.env.REACT_APP_FIREBASE_API_KEY,
-  authDomain: process.env.REACT_APP_FIREBASE_AUTH_DOMAIN,
-  projectId: process.env.REACT_APP_FIREBASE_PROJECT_ID,
-  storageBucket: process.env.REACT_APP_FIREBASE_STORAGE_BUCKET,
-  messagingSenderId: process.env.REACT_APP_FIREBASE_MESSAGING_SENDER_ID,
-  appId: process.env.REACT_APP_FIREBASE_APP_ID,
-  measurementId: process.env.REACT_APP_FIREBASE_MEASUREMENT_ID
+  apiKey: "AIzaSyDm8aCEVPbnjuaMiofKuI6o_f_biGA3PYY",
+  authDomain: "ai-mock-interview-e2efd.firebaseapp.com",
+  projectId: "ai-mock-interview-e2efd",
+  storageBucket: "ai-mock-interview-e2efd.firebasestorage.app",
+  messagingSenderId: "998854238206",
+  appId: "1:998854238206:web:677f653d49f204b94b6aaf",
+  measurementId: "G-NK375DJP37"
 };
 
 // Initialize Firebase

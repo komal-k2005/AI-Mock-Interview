@@ -28,11 +28,9 @@ const Login = () => {
     setLoading(true);
 
     try {
-      // Try Firebase authentication first
       const firebaseResult = await loginWithEmailPassword(formData.email, formData.password);
       
       if (firebaseResult.success) {
-        // Send token to backend for verification
         try {
           const response = await authAPI.googleAuth({ idToken: firebaseResult.idToken });
           localStorage.setItem('token', response.data.token || firebaseResult.idToken);
@@ -44,7 +42,6 @@ const Login = () => {
           }));
           navigate('/dashboard');
         } catch (backendErr) {
-          // If backend fails, still log in with Firebase token
           localStorage.setItem('token', firebaseResult.idToken);
           localStorage.setItem('user', JSON.stringify({
             email: firebaseResult.user.email,
@@ -58,7 +55,6 @@ const Login = () => {
         setError(firebaseResult.error);
       }
     } catch (err) {
-      console.error('Login error:', err);
       setError('Login failed. Please check your credentials and try again.');
     } finally {
       setLoading(false);
@@ -80,7 +76,6 @@ const Login = () => {
       const result = await signInWithGoogle();
       
       if (result.success) {
-        // Send token to backend for verification
         try {
           const response = await authAPI.googleAuth({ idToken: result.idToken });
           localStorage.setItem('token', response.data.token || result.idToken);
@@ -93,7 +88,6 @@ const Login = () => {
           }));
           navigate('/dashboard');
         } catch (backendErr) {
-          // If backend fails, still log in with Firebase token
           localStorage.setItem('token', result.idToken);
           localStorage.setItem('user', JSON.stringify({
             email: result.user.email,
@@ -108,7 +102,6 @@ const Login = () => {
         setError(result.error);
       }
     } catch (err) {
-      console.error('Google Sign-In error:', err);
       setError('Google Sign-In failed. Please try again, or use email login instead.');
     } finally {
       setGoogleLoading(false);
@@ -116,24 +109,18 @@ const Login = () => {
   };
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-indigo-100 via-purple-50 to-pink-100 flex items-center justify-center px-4 animate-fade-in">
-      <div className="absolute inset-0 overflow-hidden">
-        <div className="absolute -top-40 -right-40 w-80 h-80 bg-purple-300 rounded-full mix-blend-multiply filter blur-xl opacity-70 animate-float"></div>
-        <div className="absolute -bottom-40 -left-40 w-80 h-80 bg-indigo-300 rounded-full mix-blend-multiply filter blur-xl opacity-70 animate-float" style={{ animationDelay: '2s' }}></div>
-        <div className="absolute top-40 left-40 w-80 h-80 bg-pink-300 rounded-full mix-blend-multiply filter blur-xl opacity-70 animate-float" style={{ animationDelay: '4s' }}></div>
-      </div>
-      
-      <Card className="w-full max-w-md relative z-10 animate-slide-in">
+    <div className="min-h-screen bg-gradient-to-br from-slate-50 to-slate-100 flex items-center justify-center px-4">
+      <Card className="w-full max-w-md animate-fade-in shadow-2xl">
         <div className="text-center mb-8">
-          <div className="text-5xl mb-4 animate-bounce">🤖</div>
-          <h2 className="text-3xl font-bold bg-gradient-to-r from-indigo-600 to-purple-600 bg-clip-text text-transparent">
+          <div className="text-5xl mb-4">🤖</div>
+          <h2 className="text-3xl font-bold text-slate-800">
             Welcome Back
           </h2>
-          <p className="text-gray-600 mt-2">Sign in to continue your AI interview practice</p>
+          <p className="text-slate-600 mt-2">Sign in to continue your AI interview practice</p>
         </div>
         
         {error && (
-          <div className="bg-red-100 border border-red-400 text-red-700 px-4 py-3 rounded-lg mb-4 animate-shimmer">
+          <div className="bg-red-50 border border-red-200 text-red-700 px-4 py-3 rounded-lg mb-4">
             {error}
             <button
               onClick={handleClearCache}
@@ -148,7 +135,7 @@ const Login = () => {
           onClick={handleGoogleSignIn}
           disabled={googleLoading}
           variant="secondary"
-          className="w-full mb-6 flex items-center justify-center space-x-2"
+          className="w-full mb-6 flex items-center justify-center space-x-2 bg-white border-2 border-slate-200 text-slate-700 hover:bg-slate-50"
         >
           <svg className="w-5 h-5" viewBox="0 0 24 24">
             <path fill="currentColor" d="M22.56 12.25c0-.78-.07-1.53-.2-2.25H12v4.26h5.92c-.26 1.37-1.04 2.53-2.21 3.31v2.77h3.57c2.08-1.92 3.28-4.74 3.28-8.09z" fill="#4285F4"/>
@@ -161,16 +148,16 @@ const Login = () => {
 
         <div className="relative mb-6">
           <div className="absolute inset-0 flex items-center">
-            <div className="w-full border-t border-gray-300"></div>
+            <div className="w-full border-t border-slate-200"></div>
           </div>
           <div className="relative flex justify-center text-sm">
-            <span className="px-2 bg-white text-gray-500">Or continue with email</span>
+            <span className="px-2 bg-white text-slate-500">Or continue with email</span>
           </div>
         </div>
 
         <form onSubmit={handleSubmit}>
           <div className="mb-4">
-            <label className="block text-gray-700 text-sm font-bold mb-2">
+            <label className="block text-slate-700 text-sm font-semibold mb-2">
               Email
             </label>
             <input
@@ -178,12 +165,13 @@ const Login = () => {
               name="email"
               value={formData.email}
               onChange={handleChange}
-              className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-indigo-500 transition-all duration-300 focus:shadow-lg"
+              className="w-full px-4 py-3 border-2 border-slate-200 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent transition-all duration-200"
               required
+              placeholder="Enter your email"
             />
           </div>
           <div className="mb-6">
-            <label className="block text-gray-700 text-sm font-bold mb-2">
+            <label className="block text-slate-700 text-sm font-semibold mb-2">
               Password
             </label>
             <input
@@ -191,11 +179,12 @@ const Login = () => {
               name="password"
               value={formData.password}
               onChange={handleChange}
-              className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-indigo-500 transition-all duration-300 focus:shadow-lg"
+              className="w-full px-4 py-3 border-2 border-slate-200 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent transition-all duration-200"
               required
+              placeholder="Enter your password"
             />
             <div className="text-right mt-2">
-              <Link to="/forgot-password" className="text-sm text-indigo-600 hover:text-indigo-800 transition-colors">
+              <Link to="/forgot-password" className="text-sm text-blue-600 hover:text-blue-800 font-medium">
                 Forgot Password?
               </Link>
             </div>
@@ -208,9 +197,9 @@ const Login = () => {
             {loading ? 'Logging in...' : 'Login'}
           </Button>
         </form>
-        <p className="text-center mt-4 text-gray-600">
+        <p className="text-center mt-4 text-slate-600">
           Don't have an account?{' '}
-          <Link to="/register" className="text-indigo-600 hover:text-indigo-800 font-medium transition-colors">
+          <Link to="/register" className="text-blue-600 hover:text-blue-800 font-semibold">
             Register
           </Link>
         </p>

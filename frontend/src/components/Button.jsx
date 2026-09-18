@@ -1,16 +1,16 @@
 import React from 'react';
 
 const Button = ({ children, onClick, type = 'button', variant = 'primary', disabled = false, className = '' }) => {
-  const baseStyles = 'px-6 py-3 rounded-lg font-semibold transition-all duration-300 transform hover:scale-105 active:scale-95 shadow-lg hover:shadow-xl';
+  const baseStyles = 'px-6 py-3 rounded-lg font-semibold transition-all duration-200 shadow-sm';
   
   const variants = {
-    primary: 'bg-gradient-to-r from-indigo-600 to-purple-600 text-white hover:from-indigo-700 hover:to-purple-700 shadow-indigo-500/50',
-    secondary: 'bg-gradient-to-r from-gray-200 to-gray-300 text-gray-800 hover:from-gray-300 hover:to-gray-400 shadow-gray-500/50',
-    danger: 'bg-gradient-to-r from-red-500 to-pink-500 text-white hover:from-red-600 hover:to-pink-600 shadow-red-500/50',
-    success: 'bg-gradient-to-r from-green-500 to-emerald-500 text-white hover:from-green-600 hover:to-emerald-600 shadow-green-500/50',
+    primary: 'bg-blue-600 text-white hover:bg-blue-700 focus:ring-2 focus:ring-blue-500 focus:ring-offset-2',
+    secondary: 'bg-white text-slate-700 border-2 border-slate-200 hover:bg-slate-50 focus:ring-2 focus:ring-slate-500 focus:ring-offset-2',
+    danger: 'bg-red-600 text-white hover:bg-red-700 focus:ring-2 focus:ring-red-500 focus:ring-offset-2',
+    success: 'bg-green-600 text-white hover:bg-green-700 focus:ring-2 focus:ring-green-500 focus:ring-offset-2',
   };
 
-  const disabledStyles = 'opacity-50 cursor-not-allowed transform-none hover:scale-100';
+  const disabledStyles = 'opacity-50 cursor-not-allowed';
 
   return (
     <button
@@ -19,7 +19,7 @@ const Button = ({ children, onClick, type = 'button', variant = 'primary', disab
       disabled={disabled}
       className={`${baseStyles} ${variants[variant]} ${disabled ? disabledStyles : ''} ${className}`}
     >
-      <span className="relative z-10">{children}</span>
+      {children}
     </button>
   );
 };

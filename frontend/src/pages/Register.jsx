@@ -31,7 +31,6 @@ const Register = () => {
     setLoading(true);
 
     try {
-      // Try Firebase registration first
       const firebaseResult = await registerWithEmailPassword(
         formData.email, 
         formData.password, 
@@ -40,14 +39,11 @@ const Register = () => {
       
       if (firebaseResult.success) {
         setSuccess(firebaseResult.message);
-        // Also register in backend
         try {
           await authAPI.register(formData);
         } catch (backendErr) {
-          // Backend registration failed, but Firebase succeeded
         }
         
-        // Redirect to email verification page
         setTimeout(() => {
           navigate('/email-verification');
         }, 2000);
@@ -55,7 +51,6 @@ const Register = () => {
         setError(firebaseResult.error);
       }
     } catch (err) {
-      // Fallback to backend registration if Firebase fails
       try {
         const response = await authAPI.register(formData);
         setSuccess(response.data.message || 'Registration successful');
@@ -78,7 +73,6 @@ const Register = () => {
       const result = await signInWithGoogle();
       
       if (result.success) {
-        // Send token to backend for verification
         try {
           const response = await authAPI.googleAuth({ idToken: result.idToken });
           localStorage.setItem('token', response.data.token || result.idToken);
@@ -91,7 +85,6 @@ const Register = () => {
           }));
           navigate('/dashboard');
         } catch (backendErr) {
-          // If backend fails, still log in with Firebase token
           localStorage.setItem('token', result.idToken);
           localStorage.setItem('user', JSON.stringify({
             email: result.user.email,
@@ -106,7 +99,6 @@ const Register = () => {
         setError(result.error);
       }
     } catch (err) {
-      console.error('Google Sign-In error:', err);
       setError('Google Sign-In failed. Please try again, or use email registration instead.');
     } finally {
       setGoogleLoading(false);
@@ -114,29 +106,23 @@ const Register = () => {
   };
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-purple-100 via-pink-50 to-indigo-100 flex items-center justify-center px-4 animate-fade-in">
-      <div className="absolute inset-0 overflow-hidden">
-        <div className="absolute -top-40 -right-40 w-80 h-80 bg-indigo-300 rounded-full mix-blend-multiply filter blur-xl opacity-70 animate-float"></div>
-        <div className="absolute -bottom-40 -left-40 w-80 h-80 bg-pink-300 rounded-full mix-blend-multiply filter blur-xl opacity-70 animate-float" style={{ animationDelay: '2s' }}></div>
-        <div className="absolute top-40 left-40 w-80 h-80 bg-purple-300 rounded-full mix-blend-multiply filter blur-xl opacity-70 animate-float" style={{ animationDelay: '4s' }}></div>
-      </div>
-      
-      <Card className="w-full max-w-md relative z-10 animate-slide-in">
+    <div className="min-h-screen bg-gradient-to-br from-slate-50 to-slate-100 flex items-center justify-center px-4">
+      <Card className="w-full max-w-md animate-fade-in shadow-2xl">
         <div className="text-center mb-8">
-          <div className="text-5xl mb-4 animate-bounce">🚀</div>
-          <h2 className="text-3xl font-bold bg-gradient-to-r from-purple-600 to-pink-600 bg-clip-text text-transparent">
+          <div className="text-5xl mb-4">🚀</div>
+          <h2 className="text-3xl font-bold text-slate-800">
             Create Account
           </h2>
-          <p className="text-gray-600 mt-2">Start your AI-powered interview practice</p>
+          <p className="text-slate-600 mt-2">Start your AI-powered interview practice</p>
         </div>
         
         {error && (
-          <div className="bg-red-100 border border-red-400 text-red-700 px-4 py-3 rounded-lg mb-4 animate-shimmer">
+          <div className="bg-red-50 border border-red-200 text-red-700 px-4 py-3 rounded-lg mb-4">
             {error}
           </div>
         )}
         {success && (
-          <div className="bg-green-100 border border-green-400 text-green-700 px-4 py-3 rounded-lg mb-4 animate-shimmer">
+          <div className="bg-green-50 border border-green-200 text-green-700 px-4 py-3 rounded-lg mb-4">
             {success}
           </div>
         )}
@@ -145,7 +131,7 @@ const Register = () => {
           onClick={handleGoogleSignIn}
           disabled={googleLoading}
           variant="secondary"
-          className="w-full mb-6 flex items-center justify-center space-x-2"
+          className="w-full mb-6 flex items-center justify-center space-x-2 bg-white border-2 border-slate-200 text-slate-700 hover:bg-slate-50"
         >
           <svg className="w-5 h-5" viewBox="0 0 24 24">
             <path fill="currentColor" d="M22.56 12.25c0-.78-.07-1.53-.2-2.25H12v4.26h5.92c-.26 1.37-1.04 2.53-2.21 3.31v2.77h3.57c2.08-1.92 3.28-4.74 3.28-8.09z" fill="#4285F4"/>
@@ -158,16 +144,16 @@ const Register = () => {
 
         <div className="relative mb-6">
           <div className="absolute inset-0 flex items-center">
-            <div className="w-full border-t border-gray-300"></div>
+            <div className="w-full border-t border-slate-200"></div>
           </div>
           <div className="relative flex justify-center text-sm">
-            <span className="px-2 bg-white text-gray-500">Or continue with email</span>
+            <span className="px-2 bg-white text-slate-500">Or continue with email</span>
           </div>
         </div>
 
         <form onSubmit={handleSubmit}>
           <div className="mb-4">
-            <label className="block text-gray-700 text-sm font-bold mb-2">
+            <label className="block text-slate-700 text-sm font-semibold mb-2">
               Name
             </label>
             <input
@@ -175,12 +161,13 @@ const Register = () => {
               name="name"
               value={formData.name}
               onChange={handleChange}
-              className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-purple-500 transition-all duration-300 focus:shadow-lg"
+              className="w-full px-4 py-3 border-2 border-slate-200 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent transition-all duration-200"
               required
+              placeholder="Enter your name"
             />
           </div>
           <div className="mb-4">
-            <label className="block text-gray-700 text-sm font-bold mb-2">
+            <label className="block text-slate-700 text-sm font-semibold mb-2">
               Email
             </label>
             <input
@@ -188,12 +175,13 @@ const Register = () => {
               name="email"
               value={formData.email}
               onChange={handleChange}
-              className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-purple-500 transition-all duration-300 focus:shadow-lg"
+              className="w-full px-4 py-3 border-2 border-slate-200 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent transition-all duration-200"
               required
+              placeholder="Enter your email"
             />
           </div>
           <div className="mb-6">
-            <label className="block text-gray-700 text-sm font-bold mb-2">
+            <label className="block text-slate-700 text-sm font-semibold mb-2">
               Password
             </label>
             <input
@@ -201,11 +189,12 @@ const Register = () => {
               name="password"
               value={formData.password}
               onChange={handleChange}
-              className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-purple-500 transition-all duration-300 focus:shadow-lg"
+              className="w-full px-4 py-3 border-2 border-slate-200 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent transition-all duration-200"
               required
               minLength="6"
+              placeholder="Create a password"
             />
-            <p className="text-xs text-gray-500 mt-1">Minimum 6 characters</p>
+            <p className="text-xs text-slate-500 mt-1">Minimum 6 characters</p>
           </div>
           <Button
             type="submit"
@@ -215,9 +204,9 @@ const Register = () => {
             {loading ? 'Registering...' : 'Register'}
           </Button>
         </form>
-        <p className="text-center mt-4 text-gray-600">
+        <p className="text-center mt-4 text-slate-600">
           Already have an account?{' '}
-          <Link to="/login" className="text-purple-600 hover:text-purple-800 font-medium transition-colors">
+          <Link to="/login" className="text-blue-600 hover:text-blue-800 font-semibold">
             Login
           </Link>
         </p>

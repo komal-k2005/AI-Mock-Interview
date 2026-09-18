@@ -33,48 +33,42 @@ const ForgotPassword = () => {
   };
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-orange-100 via-amber-50 to-yellow-100 flex items-center justify-center px-4 animate-fade-in">
-      <div className="absolute inset-0 overflow-hidden">
-        <div className="absolute -top-40 -right-40 w-80 h-80 bg-orange-300 rounded-full mix-blend-multiply filter blur-xl opacity-70 animate-float"></div>
-        <div className="absolute -bottom-40 -left-40 w-80 h-80 bg-yellow-300 rounded-full mix-blend-multiply filter blur-xl opacity-70 animate-float" style={{ animationDelay: '2s' }}></div>
-        <div className="absolute top-40 left-40 w-80 h-80 bg-amber-300 rounded-full mix-blend-multiply filter blur-xl opacity-70 animate-float" style={{ animationDelay: '4s' }}></div>
-      </div>
-      
-      <Card className="w-full max-w-md relative z-10 animate-slide-in">
+    <div className="min-h-screen bg-gradient-to-br from-slate-50 to-slate-100 flex items-center justify-center px-4">
+      <Card className="w-full max-w-md animate-fade-in shadow-2xl">
         <div className="text-center mb-8">
-          <div className="text-5xl mb-4 animate-bounce">🔑</div>
-          <h2 className="text-3xl font-bold bg-gradient-to-r from-orange-600 to-amber-600 bg-clip-text text-transparent">
+          <div className="text-5xl mb-4">🔑</div>
+          <h2 className="text-3xl font-bold text-slate-800">
             Forgot Password
           </h2>
-          <p className="text-gray-600 mt-2">Reset your password to continue</p>
+          <p className="text-slate-600 mt-2">Reset your password to continue</p>
         </div>
         
         {error && (
-          <div className="bg-red-100 border border-red-400 text-red-700 px-4 py-3 rounded-lg mb-4 animate-shimmer">
+          <div className="bg-red-50 border border-red-200 text-red-700 px-4 py-3 rounded-lg mb-4">
             {error}
           </div>
         )}
         
         {success && (
-          <div className="bg-green-100 border border-green-400 text-green-700 px-4 py-3 rounded-lg mb-4 animate-shimmer">
+          <div className="bg-green-50 border border-green-200 text-green-700 px-4 py-3 rounded-lg mb-4">
             {success}
           </div>
         )}
         
-        <p className="text-gray-600 mb-6 text-center">
+        <p className="text-slate-600 mb-6 text-center">
           Enter your email address and we'll send you a link to reset your password.
         </p>
 
         <form onSubmit={handleSubmit}>
           <div className="mb-6">
-            <label className="block text-gray-700 text-sm font-bold mb-2">
+            <label className="block text-slate-700 text-sm font-semibold mb-2">
               Email
             </label>
             <input
               type="email"
               value={email}
               onChange={(e) => setEmail(e.target.value)}
-              className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-orange-500 transition-all duration-300 focus:shadow-lg"
+              className="w-full px-4 py-3 border-2 border-slate-200 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent transition-all duration-200"
               required
               placeholder="Enter your email"
             />
@@ -90,10 +84,10 @@ const ForgotPassword = () => {
         </form>
 
         <div className="text-center mt-6 space-y-2">
-          <Link to="/login" className="block text-orange-600 hover:text-orange-800 font-medium transition-colors">
+          <Link to="/login" className="block text-blue-600 hover:text-blue-800 font-semibold">
             Back to Login
           </Link>
-          <Link to="/register" className="block text-gray-600 hover:text-gray-800 transition-colors">
+          <Link to="/register" className="block text-slate-600 hover:text-slate-800">
             Don't have an account? Register
           </Link>
         </div>
