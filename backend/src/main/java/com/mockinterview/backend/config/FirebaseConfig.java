@@ -34,15 +34,11 @@ public class FirebaseConfig {
             if (FirebaseApp.getApps().isEmpty()) {
                 FirebaseApp.initializeApp(options);
                 firebaseInitialized = true;
-                System.out.println("Firebase initialized successfully");
             } else {
                 firebaseInitialized = true;
-                System.out.println("Firebase already initialized");
             }
         } catch (IOException e) {
-            System.err.println("Failed to initialize Firebase: " + e.getMessage());
             // For development, we'll continue without Firebase
-            System.out.println("Running in development mode without Firebase");
             firebaseInitialized = false;
         }
     }

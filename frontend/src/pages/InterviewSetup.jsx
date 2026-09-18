@@ -29,9 +29,7 @@ const InterviewSetup = () => {
     setLoading(true);
 
     try {
-      console.log('Creating interview with data:', formData);
       const response = await interviewAPI.create(formData);
-      console.log('Interview created successfully:', response.data);
       navigate(`/interview/${response.data.id}`);
     } catch (error) {
       console.error('Error creating interview:', error);

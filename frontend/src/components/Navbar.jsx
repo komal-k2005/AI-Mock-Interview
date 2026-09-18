@@ -19,17 +19,11 @@ const Navbar = () => {
 
   const handleLoginClick = (e) => {
     e.preventDefault();
-    console.log('Login button clicked in navbar');
-    console.log('Current path:', window.location.pathname);
-    console.log('Is logged in:', isLoggedIn);
     navigate('/login');
   };
 
   const handleRegisterClick = (e) => {
     e.preventDefault();
-    console.log('Register button clicked in navbar');
-    console.log('Current path:', window.location.pathname);
-    console.log('Is logged in:', isLoggedIn);
     navigate('/register');
   };
 

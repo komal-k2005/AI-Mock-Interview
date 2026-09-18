@@ -37,9 +37,6 @@ googleProvider.setCustomParameters({
   login_hint: ''
 });
 
-// Debug: Log Firebase initialization
-console.log('Firebase initialized with config:', firebaseConfig);
-
 // Helper function to check Firebase configuration
 export const checkFirebaseConfig = () => {
   const issues = [];
@@ -63,8 +60,6 @@ export const signInWithGoogle = async () => {
     const result = await signInWithPopup(auth, googleProvider);
     const user = result.user;
     const idToken = await user.getIdToken();
-    
-    console.log('Google Sign-In successful:', user.email);
     
     // Send token to backend for verification
     return { success: true, user, idToken };

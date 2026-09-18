@@ -21,7 +21,6 @@ public class InterviewAIService {
 
     public boolean isAIEnabled() {
         boolean enabled = chatClientBuilder != null && !apiKey.equals("your-openai-api-key") && !apiKey.isEmpty();
-        System.out.println("AI Status Check - chatClientBuilder: " + (chatClientBuilder != null) + ", apiKey: " + (!apiKey.equals("your-openai-api-key") && !apiKey.isEmpty()) + ", Overall: " + enabled);
         return enabled;
     }
 

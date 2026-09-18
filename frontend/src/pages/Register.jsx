@@ -44,7 +44,7 @@ const Register = () => {
         try {
           await authAPI.register(formData);
         } catch (backendErr) {
-          console.log('Backend registration failed, but Firebase succeeded');
+          // Backend registration failed, but Firebase succeeded
         }
         
         // Redirect to email verification page
@@ -92,7 +92,6 @@ const Register = () => {
           navigate('/dashboard');
         } catch (backendErr) {
           // If backend fails, still log in with Firebase token
-          console.log('Backend verification failed, proceeding with Firebase auth:', backendErr);
           localStorage.setItem('token', result.idToken);
           localStorage.setItem('user', JSON.stringify({
             email: result.user.email,
