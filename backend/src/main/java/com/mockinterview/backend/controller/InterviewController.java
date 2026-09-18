@@ -11,7 +11,7 @@ import java.util.List;
 
 @RestController
 @RequestMapping("/api/interviews")
-@CrossOrigin(origins = {"http://localhost:5173", "http://localhost:5174"})
+@CrossOrigin(origins = {"${FRONTEND_URL:http://localhost:5173}"})
 public class InterviewController {
 
     @Autowired

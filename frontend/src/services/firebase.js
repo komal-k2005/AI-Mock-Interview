@@ -11,15 +11,15 @@ import {
   sendPasswordResetEmail
 } from 'firebase/auth';
 
-// Firebase configuration - replace with your Firebase project config
+// Firebase configuration - requires environment variables
 const firebaseConfig = {
-  apiKey: process.env.REACT_APP_FIREBASE_API_KEY || "AIzaSyDm8aCEVPbnjuaMiofKuI6o_f_biGA3PYY",
-  authDomain: process.env.REACT_APP_FIREBASE_AUTH_DOMAIN || "ai-mock-interview-e2efd.firebaseapp.com",
-  projectId: process.env.REACT_APP_FIREBASE_PROJECT_ID || "ai-mock-interview-e2efd",
-  storageBucket: process.env.REACT_APP_FIREBASE_STORAGE_BUCKET || "ai-mock-interview-e2efd.firebasestorage.app",
-  messagingSenderId: process.env.REACT_APP_FIREBASE_MESSAGING_SENDER_ID || "998854238206",
-  appId: process.env.REACT_APP_FIREBASE_APP_ID || "1:998854238206:web:677f653d49f204b94b6aaf",
-  measurementId: process.env.REACT_APP_FIREBASE_MEASUREMENT_ID || "G-NK375DJP37"
+  apiKey: process.env.REACT_APP_FIREBASE_API_KEY,
+  authDomain: process.env.REACT_APP_FIREBASE_AUTH_DOMAIN,
+  projectId: process.env.REACT_APP_FIREBASE_PROJECT_ID,
+  storageBucket: process.env.REACT_APP_FIREBASE_STORAGE_BUCKET,
+  messagingSenderId: process.env.REACT_APP_FIREBASE_MESSAGING_SENDER_ID,
+  appId: process.env.REACT_APP_FIREBASE_APP_ID,
+  measurementId: process.env.REACT_APP_FIREBASE_MEASUREMENT_ID
 };
 
 // Initialize Firebase
@@ -64,8 +64,6 @@ export const signInWithGoogle = async () => {
     // Send token to backend for verification
     return { success: true, user, idToken };
   } catch (error) {
-    console.error('Google Sign-In Error:', error);
-    
     // Provide more specific error messages
     let errorMessage = 'Google Sign-In failed. Please try again.';
     if (error.code === 'auth/popup-blocked') {
@@ -98,7 +96,6 @@ export const registerWithEmailPassword = async (email, password, name) => {
     
     return { success: true, user, message: 'Registration successful. Please check your email for verification.' };
   } catch (error) {
-    console.error('Registration Error:', error);
     return { success: false, error: error.message };
   }
 };
@@ -117,8 +114,6 @@ export const loginWithEmailPassword = async (email, password) => {
     
     return { success: true, user, idToken };
   } catch (error) {
-    console.error('Login Error:', error);
-    
     // Provide more specific error messages
     let errorMessage = 'Login failed. Please check your credentials.';
     if (error.code === 'auth/user-not-found') {
@@ -145,8 +140,6 @@ export const resetPassword = async (email) => {
     await sendPasswordResetEmail(auth, email);
     return { success: true, message: 'Password reset email sent successfully' };
   } catch (error) {
-    console.error('Password Reset Error:', error);
-    
     // Provide more specific error messages
     let errorMessage = 'Failed to send password reset email';
     if (error.code === 'auth/user-not-found') {
@@ -174,7 +167,6 @@ export const logout = async () => {
     await signOut(auth);
     return { success: true };
   } catch (error) {
-    console.error('Logout Error:', error);
     return { success: false, error: error.message };
   }
 };
@@ -194,7 +186,6 @@ export const reloadUser = async () => {
     }
     return { success: false, error: 'No user logged in' };
   } catch (error) {
-    console.error('Reload User Error:', error);
     return { success: false, error: error.message };
   }
 };
