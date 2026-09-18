@@ -11,15 +11,15 @@ import {
   sendPasswordResetEmail
 } from 'firebase/auth';
 
-// Firebase configuration
+// Firebase configuration - use environment variables in production
 const firebaseConfig = {
-  apiKey: "AIzaSyDm8aCEVPbnjuaMiofKuI6o_f_biGA3PYY",
-  authDomain: "ai-mock-interview-e2efd.firebaseapp.com",
-  projectId: "ai-mock-interview-e2efd",
-  storageBucket: "ai-mock-interview-e2efd.firebasestorage.app",
-  messagingSenderId: "998854238206",
-  appId: "1:998854238206:web:677f653d49f204b94b6aaf",
-  measurementId: "G-NK375DJP37"
+  apiKey: import.meta.env.VITE_FIREBASE_API_KEY,
+  authDomain: import.meta.env.VITE_FIREBASE_AUTH_DOMAIN,
+  projectId: import.meta.env.VITE_FIREBASE_PROJECT_ID,
+  storageBucket: import.meta.env.VITE_FIREBASE_STORAGE_BUCKET,
+  messagingSenderId: import.meta.env.VITE_FIREBASE_MESSAGING_SENDER_ID,
+  appId: import.meta.env.VITE_FIREBASE_APP_ID,
+  measurementId: import.meta.env.VITE_FIREBASE_MEASUREMENT_ID
 };
 
 // Initialize Firebase
@@ -41,13 +41,13 @@ googleProvider.setCustomParameters({
 export const checkFirebaseConfig = () => {
   const issues = [];
   
-  if (!firebaseConfig.apiKey || firebaseConfig.apiKey === 'YOUR_API_KEY') {
+  if (!firebaseConfig.apiKey) {
     issues.push('Firebase API key is not configured');
   }
-  if (!firebaseConfig.authDomain || firebaseConfig.authDomain === 'YOUR_PROJECT_ID.firebaseapp.com') {
+  if (!firebaseConfig.authDomain) {
     issues.push('Firebase authDomain is not configured');
   }
-  if (!firebaseConfig.projectId || firebaseConfig.projectId === 'YOUR_PROJECT_ID') {
+  if (!firebaseConfig.projectId) {
     issues.push('Firebase projectId is not configured');
   }
   
@@ -61,10 +61,8 @@ export const signInWithGoogle = async () => {
     const user = result.user;
     const idToken = await user.getIdToken();
     
-    // Send token to backend for verification
     return { success: true, user, idToken };
   } catch (error) {
-    // Provide more specific error messages
     let errorMessage = 'Google Sign-In failed. Please try again.';
     if (error.code === 'auth/popup-blocked') {
       errorMessage = 'Popup was blocked. Please allow popups for this site and try again.';
@@ -88,10 +86,7 @@ export const registerWithEmailPassword = async (email, password, name) => {
     const userCredential = await createUserWithEmailAndPassword(auth, email, password);
     const user = userCredential.user;
     
-    // Update display name
     await user.updateProfile({ displayName: name });
-    
-    // Send email verification
     await sendEmailVerification(user);
     
     return { success: true, user, message: 'Registration successful. Please check your email for verification.' };
@@ -107,14 +102,12 @@ export const loginWithEmailPassword = async (email, password) => {
     const user = userCredential.user;
     const idToken = await user.getIdToken();
     
-    // Check if email is verified
     if (!user.emailVerified) {
       return { success: false, error: 'Please verify your email before logging in.' };
     }
     
     return { success: true, user, idToken };
   } catch (error) {
-    // Provide more specific error messages
     let errorMessage = 'Login failed. Please check your credentials.';
     if (error.code === 'auth/user-not-found') {
       errorMessage = 'No account found with this email. Please register first.';
@@ -140,7 +133,6 @@ export const resetPassword = async (email) => {
     await sendPasswordResetEmail(auth, email);
     return { success: true, message: 'Password reset email sent successfully' };
   } catch (error) {
-    // Provide more specific error messages
     let errorMessage = 'Failed to send password reset email';
     if (error.code === 'auth/user-not-found') {
       errorMessage = 'No account found with this email address';
