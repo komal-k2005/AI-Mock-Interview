@@ -1,8 +1,5 @@
 package com.mockinterview.backend.controller;
 
-import com.mockinterview.backend.dto.GoogleAuthRequest;
-import com.mockinterview.backend.dto.LoginRequest;
-import com.mockinterview.backend.dto.RegisterRequest;
 import com.mockinterview.backend.service.AuthService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
@@ -10,7 +7,7 @@ import org.springframework.web.bind.annotation.*;
 
 @RestController
 @RequestMapping("/api/auth")
-@CrossOrigin(origins = {"${FRONTEND_URL:http://localhost:5173}"})
+@CrossOrigin(origins = {"*"})
 public class AuthController {
 
     @Autowired
